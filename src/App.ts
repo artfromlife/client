@@ -1,10 +1,8 @@
 // 选项式
+import { CodeEditor } from "./components/CodeEditor";
+import './css/app.css'
 export const App = {
     name: 'App',
-    template: `<button @click="count++">{{count}}</button>`,
-    data() {
-        return {
-            count: 0
-        }
-    }
+    components: { CodeEditor },
+    template: `<CodeEditor  class="editor-position" value="const noop = () => {}"/>`,
 }
