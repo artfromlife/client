@@ -2,7 +2,9 @@
   "compilerOptions": {
     "module": "ESNext",
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "Node",
+    "sourceMap": true
   },
   "ts-node": {
     "compilerOptions": {
