@@ -13,6 +13,5 @@ export const CodeEditor = {
             value: '',
             language: 'javascript'
         })
-        console.log(monacoInstance)
     }
 }

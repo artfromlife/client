@@ -1,6 +1,6 @@
 // 选项式
 import { CodeEditor } from "./components/CodeEditor";
-import './css/app.css'
+import './style/app.css'
 export const App = {
     name: 'App',
     components: { CodeEditor },

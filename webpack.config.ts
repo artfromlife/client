@@ -5,22 +5,33 @@ import webpack from 'webpack';
 // in case you run into any typescript error when configuring `devServer`
 import 'webpack-dev-server';
 import HtmlWebpackPlugin from "html-webpack-plugin";
-import MonacoEditorWebpackPlugin  from 'monaco-editor-webpack-plugin'
+import MonacoEditorWebpackPlugin from 'monaco-editor-webpack-plugin'
+import MiniCssExtractPlugin from "mini-css-extract-plugin"
+import CssMinimizerPlugin from "css-minimizer-webpack-plugin"
+import { CleanWebpackPlugin } from "clean-webpack-plugin"
 const config: webpack.Configuration = {
     mode: 'production',
     entry: './main.ts',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'main.js',
+        filename: '[name].[hash:8].js',
+        sourceMapFilename: '[name].[hash:8].map',
+        chunkFilename: '[id].[hash:8].js'
     },
     optimization: {
-        minimize: true // false 的话 不压缩代码
+        minimize: true, // false 的话 不压缩代码
+        minimizer: [
+            new CssMinimizerPlugin()
+        ],
+        splitChunks: {
+            chunks: 'all'
+        }
     },
     module: {
         rules: [
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                use: [MiniCssExtractPlugin.loader, 'css-loader']
             },
             {
                 test: /\.ts$/,
@@ -37,7 +48,9 @@ const config: webpack.Configuration = {
             // 插入的 script 用的是 defer, 并行下载js资源, 不阻塞且不打断html解析
         new MonacoEditorWebpackPlugin({
             languages: ['javascript']
-        })
+        }),
+        new MiniCssExtractPlugin(),
+        new CleanWebpackPlugin()
     ],
     resolve: {
         extensions: ['.ts', '.js', '.json']
