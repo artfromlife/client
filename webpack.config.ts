@@ -10,13 +10,16 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin"
 import {CleanWebpackPlugin} from "clean-webpack-plugin"
 import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer' // split bundles , not code splitting 先把大的包拆成小的
-
+import ProgressBarPlugin from 'progress-bar-webpack-plugin'
+import SpeedMeasurePlugin from 'speed-measure-webpack-plugin'
+import CompressionPlugin from 'compression-webpack-plugin'
 const config: webpack.Configuration = {
     mode: 'production',
     entry: './main.ts',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].js',
+        filename: '[name].bundle.js',
+        chunkFilename: '[name].chunk.js'
     },
     optimization: {
         minimize: true, // false 的话 不压缩代码, 内部用的是 TerserPlugin ?
@@ -25,26 +28,12 @@ const config: webpack.Configuration = {
             new CssMinimizerPlugin()
         ],
         // runtimeChunk: 'single',
+        chunkIds: 'named', //
         splitChunks: {
             chunks: 'all',
-            minSize: 10 * 1024,
-            minRemainingSize: 0,
-            minChunks: 1,
-            maxAsyncRequests: 30,
-            maxInitialRequests: 30,
-            enforceSizeThreshold: 50000,
-            cacheGroups: {
-                defaultVendors: {
-                    test: /[\\/]node_modules[\\/]/,
-                    priority: -10,
-                    reuseExistingChunk: true,
-                },
-                default: {
-                    minChunks: 2,
-                    priority: -20,
-                    reuseExistingChunk: true,
-                },
-            },
+            // minSize: 1 * 1024, // 生成的chunk 必须大于 1kb
+            // minSizeReduction: 0.1 * 1024, // 没拆一次包，主包就至少减少这么多字节，否则不拆
+            // enforceSizeThreshold: 1024 * 20, // 超过 20kb 就拆包
         },
     },
     module: {
@@ -66,7 +55,12 @@ const config: webpack.Configuration = {
         // }),
         new MiniCssExtractPlugin(),
         new CleanWebpackPlugin(),
-        new BundleAnalyzerPlugin()
+        new ProgressBarPlugin(),
+        new SpeedMeasurePlugin(),
+        // new CompressionPlugin({
+        //     threshold: 8 * 1024,
+        // }),
+        // new BundleAnalyzerPlugin()
     ],
     resolve: {
         extensions: ['.ts', '.js', '.json']
