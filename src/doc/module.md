@@ -29,7 +29,7 @@ import()，它不需要依赖 type="module" 的 script 标签 （类似函数）
 
 ```javascript
 异步组件原理
-动态的加载模块。调用 import 的之处，被视为分割点，意思是，被请求的模块和它引用的所有子模块，会分割到一个单独的 chunk 中。
+动态的加载模块。调用import的之处，被视为分割点，意思是，被请求的模块和它引用的所有子模块，会分割到一个单独的 chunk 中。
 import('/modules/my-module.js')
   .then((module) => {
     // Do something with the module.

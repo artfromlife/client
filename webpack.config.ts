@@ -21,6 +21,9 @@ const config: webpack.Configuration = {
         filename: '[name].bundle.js',
         chunkFilename: '[name].chunk.js'
     },
+    cache: {
+        type: 'filesystem'
+    },
     optimization: {
         minimize: true, // false 的话 不压缩代码, 内部用的是 TerserPlugin ?
         minimizer: [
