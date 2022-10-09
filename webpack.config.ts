@@ -50,9 +50,9 @@ const config: webpack.Configuration = {
             template: './public/index.html'
         }), // 该插件将为你生成一个 HTML5 文件， 在 body 中使用 script 标签引入你所有 webpack 生成的 bundle
             // 插入的 script 用的是 defer, 并行下载js资源, 不阻塞且不打断html解析
-        // new MonacoEditorWebpackPlugin({
-        //     languages: ['javascript']
-        // }),
+        new MonacoEditorWebpackPlugin({
+            languages: ['javascript']
+        }),
         new MiniCssExtractPlugin(),
         new CleanWebpackPlugin(),
         new ProgressBarPlugin(),

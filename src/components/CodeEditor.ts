@@ -1,6 +1,6 @@
 // options API
 import { editor } from 'monaco-editor/esm/vs/editor/editor.api'
-export const CodeEditor = {
+export default {
     template: `<div ref="editor" style="width: 80%; height: 600px"></div>`,
     props: [ 'value' ],
     data() {
